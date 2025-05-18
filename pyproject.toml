@@ -1,0 +1,10 @@
+[project]
+name = "no-pinochio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gradio>=5.29.1",
+    "torch>=2.7.0",
+]
