@@ -1,6 +1,6 @@
 from typing import Dict, Optional, Union, ClassVar, List
 from pathlib import Path
-import tomllib  # type: ignore
+import tomli  # type: ignore
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 
@@ -141,6 +141,6 @@ def load_config(config_path: Union[str, Path]) -> Config:
         raise FileNotFoundError(f"Configuration file not found: {config_path}")
 
     with open(config_path, "rb") as f:
-        config_data = tomllib.load(f)
+        config_data = tomli.load(f)
 
     return Config(**config_data)
