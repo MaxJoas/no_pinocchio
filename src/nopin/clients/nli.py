@@ -34,6 +34,7 @@ class NLIClient:
             "text-classification",
             model=f"cross-encoder/{model}",
             device=device,
+            top_k=3,
         )
 
     def __call__(self, text_pair: str) -> List[Dict[str, Any]]:

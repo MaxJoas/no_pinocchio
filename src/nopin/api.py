@@ -57,6 +57,7 @@ async def analyze_confidence(request: AnalysisRequest):
         raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 
+
 if __name__ == "__main__":
     import uvicorn
 
