@@ -12,6 +12,7 @@ def mock_mistral_config(mocker):
     config.api.mistral_api_key_env = "MISTRAL_API_KEY"
     return config
 
+
 @pytest.fixture
 def mock_mistral_config_invalid(mocker):
     """Mock config for Mistral."""
@@ -19,9 +20,8 @@ def mock_mistral_config_invalid(mocker):
     config.llm.client = "mistral"
     config.llm.model = "mistral-large"
     config.llm.temperature.get.return_value = mocker.Mock(min=0.1, max=0.9)
-    config.api.mistral_api_key_env = "" # INVALID
+    config.api.mistral_api_key_env = ""  # INVALID
     return config
-
 
 
 @pytest.fixture
