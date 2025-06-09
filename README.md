@@ -2,7 +2,7 @@
 
 
 # Demo
-
+![](assets/NoPinDemo.gif)
 
 # Requirements
 
