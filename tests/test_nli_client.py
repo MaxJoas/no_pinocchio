@@ -42,4 +42,5 @@ def test_nli_pipeline_uses_correct_model(mocker, mock_nli_config):
         "text-classification",
         model="cross-encoder/nli-deberta-v3-small",
         device=-1,
+        top_k=3,
     )
