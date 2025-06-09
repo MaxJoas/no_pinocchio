@@ -75,7 +75,10 @@ class NLIConfig(BaseModel):
     device: int = Field(default=-1)
     top_k: Optional[int] = Field(default=None)
 
-    SUPPORTED_MODELS: ClassVar[List[str]]= ["nli-deberta-v3-small", "nli-deberta-v3-base"]
+    SUPPORTED_MODELS: ClassVar[List[str]] = [
+        "nli-deberta-v3-small",
+        "nli-deberta-v3-base",
+    ]
 
     @field_validator("model")
     @classmethod

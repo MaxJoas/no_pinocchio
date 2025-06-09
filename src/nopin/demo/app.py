@@ -65,7 +65,6 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
                 height=500,
                 label="Conversation",
                 show_copy_button=True,
-                avatar_images=("👤", "🤥"),
             )
 
             # Input and send button in the same row
@@ -129,8 +128,8 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
         else:
             return "🔴 **Offline**"
 
-    def use_sample(sample_text, chat_history, show_confidence):
-        return on_message(sample_text, chat_history, show_confidence)
+    def use_sample(sample_text, chat_history):
+        return on_message(sample_text, chat_history)
 
     # Event handlers
     send_button.click(
@@ -149,14 +148,12 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
 
     # Sample question handlers
     sample1.click(
-        lambda hist, conf: use_sample(
-            "What is the capital of South Africa?", hist, conf
-        ),
+        lambda hist, conf: use_sample("What is the capital of South Africa?", hist),
         inputs=[chatbot],
         outputs=[chatbot, message],
     )
     sample2.click(
-        lambda hist, conf: use_sample("What's 2+2?", hist, conf),
+        lambda hist, conf: use_sample("What's 2+2?", hist),
         inputs=[chatbot],
         outputs=[chatbot, message],
     )

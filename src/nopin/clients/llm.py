@@ -27,9 +27,7 @@ class LLMClient:
         if self._client_name == "ollama":
             try:
                 response = ollama.list()
-                available_models = [
-                    m.model for m in response.models
-                ]
+                available_models = [m.model for m in response.models]
 
                 if self._model not in available_models:
                     raise ValueError(

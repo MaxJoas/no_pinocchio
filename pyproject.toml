@@ -69,3 +69,11 @@ include = ["src/nopin"]
 
 [tool.hatch.build.targets.wheel]
 sources = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.1.1",
+    "pytest>=8.4.0",
+    "pytest-mock>=3.14.1",
+    "black>=25.1.0",
+]
