@@ -1,0 +1,48 @@
+# =====================================================
+# NoPinocchio Configuration
+# =====================================================
+# 
+# SECURITY NOTE: This file contains NO SECRETS!
+# - Only configuration parameters and environment variable names
+# - Actual API keys go in .env file (never commit to git)
+# - See .env.example for required environment variables
+
+[llm]
+# LLM Provider Configuration
+client = "mistral"  # Options: "mistral", "ollama"
+model = "mistral-medium-latest"
+
+# Temperature settings for different providers
+[llm.temperature.mistral]
+min = 0.0  # Low temperature for main answer (more deterministic)
+max = 1.0  # High temperature for sampling (more diverse)
+
+[llm.temperature.ollama]
+min = 0.0
+max = 1.0
+
+[nli]
+# Natural Language Inference Model
+model = "nli-deberta-v3-small"  # Cross-encoder for consistency checking
+device = -1  # -1 for CPU, 0+ for GPU device ID
+
+[nopinocchio]
+# Core Algorithm Parameters
+k = 5        # Number of responses to sample for consistency checking
+alpha = 0.5  # Weight: semantic consistency (1.0) vs exact match (0.0)
+beta = 0.5   # Weight: observed consistency (1.0) vs self-reflection (0.0)
+
+
+[api]
+# =====================================================
+# API Configuration - ENVIRONMENT VARIABLE NAMES ONLY
+# =====================================================
+# Actual secrets must be in environment variables!
+mistral_api_key_env = "MISTRAL_API_KEY"  # Environment variable name
+timeout = 30          # Request timeout in seconds
+max_retries = 3       # Number of retry attempts
+
+[logging]
+# Logging Configuration
+level = "INFO"        # DEBUG, INFO, WARNING, ERROR, CRITICAL
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
