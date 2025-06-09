@@ -1,10 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "no-pinochio"
 version = "0.1.0"
-description = "Add your description here"
+description = "AI Confidence Estimation System - Detect when your AI might be lying"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "gradio>=5.29.1",
-    "torch>=2.7.0",
+requires-python = ">=3.10"
+
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
 ]
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "torch>=2.0.0",
+    "transformers>=4.30.0",
+    "numpy>=1.24.0",
+    "mistralai>=1.0.0",
+    "ollama>=0.5.1",
+    "jinja2>=3.1.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.1",
+    "fastapi>=0.115.12",
+    "uvicorn>=0.34.2",
+    "streamlit>=1.45.1",
+    "gradio>=5.29.1",
+]
+
+[project.optional-dependencies]
+frontend = [
+    "streamlit>=1.28.0",
+    "streamlit-oauth>=0.1.0",
+    "plotly>=5.15.0",
+    "pandas>=2.0.0",
+]
+
+gradio = [
+    "gradio>=5.29.1",
+]
+
+demo = [
+    "streamlit>=1.28.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.scripts]
+nopinochio = "nopin.main:main"
+
+[tool.mypy]
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
+python_version = "3.10"
+exclude = [
+    "build/",
+    "dist/",
+
+]
+
+[tool.hatch.build]
+include = ["src/nopin"]
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
