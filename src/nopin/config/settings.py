@@ -1,9 +1,6 @@
-# config/settings.py
-"""Configuration management with Pydantic validation."""
-
 from typing import Dict, Optional, Union, ClassVar, List
 from pathlib import Path
-import tomllib
+import tomllib  # type: ignore
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 
@@ -73,7 +70,6 @@ class NLIConfig(BaseModel):
 
     model: str = Field(default="nli-deberta-v3-small")
     device: int = Field(default=-1)
-    top_k: Optional[int] = Field(default=None)
 
     SUPPORTED_MODELS: ClassVar[List[str]] = [
         "nli-deberta-v3-small",

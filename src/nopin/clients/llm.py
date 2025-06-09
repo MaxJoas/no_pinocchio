@@ -89,11 +89,11 @@ class LLMClient:
             messages=[
                 {
                     "role": "user",
-                    "content": question,
+                    "content": question,  # type: ignore
                 },
             ],
         )
-        return chat_response.choices[0].message.content
+        return chat_response.choices[0].message.content  # type: ignore
 
     def _get_ollama_answer(self, *, question: str, temperature: float) -> str:
         """Get answer from Ollama.

@@ -147,13 +147,14 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
     clear_button.click(clear_chat, outputs=chatbot)
 
     # Sample question handlers
+    # Sample question handlers - FIXED
     sample1.click(
-        lambda hist, conf: use_sample("What is the capital of South Africa?", hist),
+        lambda hist: use_sample("What is the capital of South Africa?", hist),
         inputs=[chatbot],
         outputs=[chatbot, message],
     )
     sample2.click(
-        lambda hist, conf: use_sample("What's 2+2?", hist),
+        lambda hist: use_sample("What's 2+2?", hist),
         inputs=[chatbot],
         outputs=[chatbot, message],
     )

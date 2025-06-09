@@ -16,10 +16,10 @@ class NLIClient:
         self._config = config
         self._model = config.nli.model
         self._pipeline = self._get_nli_pipeline(
-            model=self._model, device=config.nli.device, top_k=config.nli.top_k
+            model=self._model, device=config.nli.device
         )
 
-    def _get_nli_pipeline(self, *, model: str, device: int, top_k: int):
+    def _get_nli_pipeline(self, *, model: str, device: int):
         """Create NLI pipeline.
 
         Args:
@@ -34,7 +34,6 @@ class NLIClient:
             "text-classification",
             model=f"cross-encoder/{model}",
             device=device,
-            top_k=top_k,
         )
 
     def __call__(self, text_pair: str) -> List[Dict[str, Any]]:

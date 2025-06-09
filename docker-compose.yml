@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: nopin-api
+    ports:
+      - "8000:8000"
+    env_file: 
+      - .env
+    environment:
+      - PYTHONPATH=/app/src
+      - NOPIN_CONFIG=/app/configs/default.toml
+    command: uv run uvicorn nopin.api:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  demo:
+    build: .
+    container_name: nopin-demo
+    ports:
+      - "7860:7860"
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app/src
+      - NOPIN_CONFIG=/app/configs/default.toml
+    command: uv run python src/nopin/demo/app.py
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+
+networks:
+  default:
+    name: nopin-network

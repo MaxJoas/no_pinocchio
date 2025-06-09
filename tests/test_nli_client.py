@@ -8,7 +8,6 @@ def mock_nli_config(mocker):
     config = mocker.Mock()
     config.nli.model = "nli-deberta-v3-small"
     config.nli.device = -1
-    config.nli.top_k = None
     return config
 
 
@@ -43,5 +42,4 @@ def test_nli_pipeline_uses_correct_model(mocker, mock_nli_config):
         "text-classification",
         model="cross-encoder/nli-deberta-v3-small",
         device=-1,
-        top_k=None,
     )

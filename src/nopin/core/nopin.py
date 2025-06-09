@@ -149,16 +149,16 @@ class NoPinocchio:
 
         # Extract contradiction probabilities
         p_contra = next(
-            (item["score"] for item in res_y_yi[0] if item["label"] == "contradiction"),
+            (item["score"] for item in res_y_yi[0] if item["label"] == "contradiction"),  # type: ignore
             0.0,
         )
         p_contra_prime = next(
-            (item["score"] for item in res_yi_y[0] if item["label"] == "contradiction"),
+            (item["score"] for item in res_yi_y[0] if item["label"] == "contradiction"),  # type: ignore
             0.0,
         )
 
         # Semantic consistency score
-        si = 0.5 * ((1 - p_contra) + (1 - p_contra_prime))
+        si = 0.5 * ((1 - p_contra) + (1 - p_contra_prime))  # type: ignore
 
         # Exact match indicator
         ri = 1.0 if self.answer == sampled_answer else 0.0
