@@ -33,7 +33,8 @@ jobs:
       run: uv run black --check --diff src/ tests/
 
     - name: Run type checking with mypy
-      run: uv run mypy
+      if: matrix.python-version == '3.10'
+      run: uv run mypy src/
 
     - name: Run tests with pytest
       run: |
