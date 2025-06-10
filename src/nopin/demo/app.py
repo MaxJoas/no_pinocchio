@@ -5,11 +5,13 @@ Clean layout with sidebar and no state issues.
 
 import gradio as gr
 import requests
+import os
 
 
 class NoPinocchioChat:
-    def __init__(self, api_url: str = "http://localhost:8000"):
-        self.api_url = api_url
+    def __init__(self, api_url: str = None):
+        # Use environment variable first, then fallback to localhost
+        self.api_url = api_url or os.getenv("API_URL", "http://localhost:8000")
 
     def check_api_connection(self) -> bool:
         """Check if NoPinocchio API is available."""
@@ -17,7 +19,7 @@ class NoPinocchioChat:
             response = requests.get(f"{self.api_url}/health", timeout=5)
             return response.status_code == 200
         except Exception as e:
-            print(e)
+            print(f"API connection failed: {e}")
             return False
 
     def analyze_confidence(self, question: str) -> dict:
@@ -85,6 +87,8 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
             gr.Markdown("### 🔌 API Status")
             api_status = gr.Markdown("🔄 Checking...")
 
+            gr.Markdown(f"**API URL:** {chat_instance.api_url}")
+
             gr.Markdown("### 💡 Sample Questions")
             sample1 = gr.Button("🌍 What is the capital of South Africa ?", size="sm")
             sample2 = gr.Button("🔢 What's 2+2?", size="sm")
@@ -96,7 +100,7 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
 
         # Check API connection
         if not chat_instance.check_api_connection():
-            error_msg = "❌ API Offline. Please start: uvicorn nopin.api:app --host 0.0.0.0 --port 8000"
+            error_msg = f"❌ API Offline. Cannot connect to {chat_instance.api_url}"
             chat_history.append({"role": "user", "content": message_text})
             chat_history.append({"role": "assistant", "content": error_msg})
             return chat_history, ""

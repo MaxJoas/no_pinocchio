@@ -9,15 +9,14 @@ services:
     environment:
       - PYTHONPATH=/app/src
       - NOPIN_CONFIG=/app/configs/default.toml
-    command: uv run uvicorn nopin.api:app --host 0.0.0.0 --port 8000
+    command: uv run uvicorn nopin.api:app --host 0.0.0.0 --port 8000 --log-level debug
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-
   demo:
     build: .
     container_name: nopin-demo
@@ -28,12 +27,12 @@ services:
     environment:
       - PYTHONPATH=/app/src
       - NOPIN_CONFIG=/app/configs/default.toml
+      - API_URL=http://api:8000  # Add this line
     command: uv run python src/nopin/demo/app.py
     restart: unless-stopped
     depends_on:
       api:
         condition: service_healthy
-
 networks:
   default:
     name: nopin-network
