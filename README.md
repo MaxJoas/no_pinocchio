@@ -123,7 +123,7 @@ nopinocchio-demo --port 7870 --api-url http://localhost:8080
 **Use via CLI:**
 
 ```bash
-nopinocchio --question "What is the capital of South Africa?" --config "<path-to-config.toml>"
+nopinocchio --question "What is the capital of South Africa?"
 
 # Or with custom config
 nopinocchio --question "What is the capital of South Africa?" --config "<path-to-config.toml>"
