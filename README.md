@@ -99,25 +99,34 @@ docker compose up demo
 ```bash
 uv venv --python 3.12
 source .venv/bin/activate
-uv pip install .
+uv sync
 ```
 
 **Start API Server:**
 
 ```bash
-uvicorn nopin.api:app --reload
+nopinocchio-api --reload
+
+# Or with custom settings
+nopinocchio-api --host 127.0.0.1 --port 8080 --reload
 ```
 
 **Start Chat Interface:**
 
 ```bash
-python src/nopin/demo/app.py
+nopinocchio-demo
+
+# Or with custom settings
+nopinocchio-demo --port 7870 --api-url http://localhost:8080
 ```
 
 **Use via CLI:**
 
 ```bash
-nopinocchio --question "What is the capital of South Africa?"
+nopinocchio --question "What is the capital of South Africa?" --config "<path-to-config.toml>"
+
+# Or with custom config
+nopinocchio --question "What is the capital of South Africa?" --config "<path-to-config.toml>"
 ```
 
 ---
