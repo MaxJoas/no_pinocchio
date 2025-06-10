@@ -9,8 +9,13 @@
 
 [llm]
 # LLM Provider Configuration
-client = "mistral"  # Options: "mistral", "ollama"
-model = "mistral-medium-latest"
+client = "ollama"  # Options: "mistral", "ollama"
+model = "qwen2.5:0.5b"
+
+# client = "mistral"  # Options: "mistral", "ollama"
+# model = "mistral-small-latest"
+
+
 
 # Temperature settings for different providers
 [llm.temperature.mistral]

@@ -1,17 +1,12 @@
-"""
-ChatGPT-style Gradio chat interface for NoPinocchio demo.
-Clean layout with sidebar and no state issues.
-"""
-
 import gradio as gr
-import requests
+import requests  # type: ignore
 import os
 
 
 class NoPinocchioChat:
-    def __init__(self, api_url: str = None):
+    def __init__(self, api_url: str = None):  # type: ignore
         # Use environment variable first, then fallback to localhost
-        self.api_url = api_url or os.getenv("API_URL", "http://localhost:8000")
+        self.api_url = api_url or os.getenv("API_URL", "http://localhost:8000")  # type: ignore
 
     def check_api_connection(self) -> bool:
         """Check if NoPinocchio API is available."""

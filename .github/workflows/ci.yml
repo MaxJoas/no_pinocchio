@@ -34,7 +34,7 @@ jobs:
 
     - name: Run type checking with mypy
       if: matrix.python-version == '3.10'
-      run: uv run mypy src/
+      run: uv run --with mypy mypy --install-types --non-interactive src/
 
     - name: Run tests with pytest
       run: |

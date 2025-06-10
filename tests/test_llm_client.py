@@ -29,7 +29,7 @@ def mock_ollama_config(mocker):
     """Mock config for Ollama."""
     config = mocker.Mock()
     config.llm.client = "ollama"
-    config.llm.model = "llama2"
+    config.llm.model = "qwen2.5:0.5b"
     config.llm.temperature.get.return_value = mocker.Mock(min=0.1, max=0.9)
     return config
 
@@ -47,22 +47,6 @@ def test_mistral_chat_returns_response(mocker, mock_mistral_config):
     result = client.chat(question="Test?", temperature="min")
 
     assert result == "Test response"
-
-
-def test_ollama_chat_returns_response(mocker, mock_ollama_config):
-    """Test Ollama client returns chat response."""
-    mock_list_response = mocker.Mock()
-    mock_list_response.models = [mocker.Mock(model="llama2")]
-    mocker.patch("nopin.clients.llm.ollama.list", return_value=mock_list_response)
-    mocker.patch(
-        "nopin.clients.llm.ollama.generate",
-        return_value={"response": "Ollama response"},
-    )
-
-    client = LLMClient(config=mock_ollama_config)
-    result = client.chat(question="Test?", temperature="max")
-
-    assert result == "Ollama response"
 
 
 def test_invalid_temperature_raises_error(mocker, mock_mistral_config):

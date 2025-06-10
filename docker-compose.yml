@@ -2,7 +2,8 @@ services:
   api:
     build: .
     container_name: nopin-api
-    network_mode: host
+    ports:
+      - "8000:8000"  # Changed from network_mode: host to explicit port mapping
     env_file: 
       - .env
     environment:
@@ -27,7 +28,7 @@ services:
     environment:
       - PYTHONPATH=/app/src
       - NOPIN_CONFIG=/app/configs/default.toml
-      - API_URL=http://api:8000  # Add this line
+      - API_URL=http://api:8000  # This stays the same for internal communication
     command: uv run python src/nopin/demo/app.py
     restart: unless-stopped
     depends_on:

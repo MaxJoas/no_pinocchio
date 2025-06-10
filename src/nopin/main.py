@@ -32,13 +32,14 @@ def main():
 
     logger = logging.getLogger(__name__)
     logger.info(f"Loaded configuration from {args.config}")
-    np_system = NoPinocchio.from_config(config=config, question=args.question)
+    np_system = NoPinocchio.from_config(config=config)
     logger.info(f"Analyzing question: {args.question}")
-    confidence = np_system.get_confidence()
+
+    result = np_system.analyze_question(question=args.question)
 
     print(f"Question: {args.question}")
-    print(f"Answer: {np_system.answer}")
-    print(f"Confidence Score: {confidence:.3f}")
+    print(f"Answer: {result["answer"]}")
+    print(f"Confidence Score: {result['confidence_score']:.3f}")
 
 
 if __name__ == "__main__":

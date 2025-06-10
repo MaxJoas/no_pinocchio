@@ -53,6 +53,9 @@ dev = [
 
 [project.scripts]
 nopinocchio = "nopin.main:main"
+nopinocchio-api = "nopin.scripts.start_api:main"
+nopinocchio-demo = "nopin.scripts.start_demo:main"
+nopinocchio-webapp = "nopin.scripts.start_demo:main"
 
 [tool.mypy]
 mypy_path = "src"
@@ -77,4 +80,6 @@ dev = [
     "pytest>=8.4.0",
     "pytest-mock>=3.14.1",
     "black>=25.1.0",
+    "types-requests>=2.31.0",
+    "types-toml>=0.10.0",
 ]
