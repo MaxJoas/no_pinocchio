@@ -36,10 +36,11 @@ def main():
     logger.info(f"Analyzing question: {args.question}")
 
     result = np_system.analyze_question(question=args.question)
+    confidence_score = result["confidence_score"]
 
     print(f"Question: {args.question}")
-    print(f"Answer: {result["answer"]}")
-    print(f"Confidence Score: {result['confidence_score']:.3f}")
+    print(f"Answer: {result['answer']}")
+    print(f"Confidence Score: {confidence_score:.3f}")
 
 
 if __name__ == "__main__":

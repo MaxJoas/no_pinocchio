@@ -108,7 +108,7 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
         else:
             answer = result.get("answer", "No answer provided")
             confidence_score = result.get("confidence_score", 0)
-            bot_response = f"{answer}\n **Confidence:** {confidence_score:.2f})"
+            bot_response = f"{answer}\n **Confidence:** {confidence_score:.2f}"
 
         chat_history.append({"role": "assistant", "content": bot_response})
 
