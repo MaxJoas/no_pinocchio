@@ -165,7 +165,6 @@ curl -X POST "http://localhost:8000/analyze" \
 
 ---
 
-## Algorithm
 ## Evaluation Study
 
 _Coming soon
