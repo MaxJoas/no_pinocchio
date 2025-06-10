@@ -1,117 +1,131 @@
-# NoPinocchio 🤥
+# NoPinocchio
 
-AI Confidence Estimation System - Detect when your AI might be lying
+A tool that adds confidence scores to your LLM's output.
 
 ## Motivation
 
-Large language models often provide confident-sounding answers even when they're uncertain or incorrect. NoPinocchio implements the confidence estimation algorithm from ["Language models (mostly) know what they know"](https://arxiv.org/abs/2308.16175) to detect when AI responses might be unreliable.
+LLMs boost productivity in areas like coding and writing. However, their usefulness is often limited by incorrect outputs and hallucinations. As a result, users spend a lot of time verifying AI-generated content. Confidence estimates can help users quickly judge which outputs are likely reliable and which ones need a closer look.
 
-The system combines self-reflection and consistency checking to provide confidence scores, helping you identify when to trust AI outputs.
+I propose **NoPinocchio**, a tool that adds confidence scores to your LLM's responses to improve trust, usability, and efficiency.
 
-## How to Use
-
-**As an API:** Send questions to the REST API and receive answers with confidence scores for integration into your applications.
-
-**As a Chat Interface:** Interactive web demo where you can ask questions and see real-time confidence estimates.
+The idea for this tool is inspired by [Cleanlab’s Trustworthy Language Model](https://cleanlab.ai/tlm/). However, since their code is not open source, I implemented the algorithm based on their [research paper](https://arxiv.org/abs/2308.16175).
 
 ## Demo
 
-![](assets/NoPinDemo.gif)
+Here's a quick look at NoPinocchio in action:
+
+![Animated demo of NoPinocchio showing confidence scores for LLM responses](assets/NoPinDemo.gif)
+
+## How to Use
+
+You can use NoPinocchio in two ways:
+
+1. **Chat interface** — Similar to ChatGPT or Claude, but with added confidence scores.
+2. **API service** — Send questions to a REST API and receive answers with confidence scores. See [API Usage](#api-usage).
+
+---
 
 ## Installation
 
+### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/MaxJoas/no_pinochio.git
-cd no_pinochio
+git clone https://github.com/MaxJoas/no_pinocchio.git
+cd no_pinocchio
 ```
 
-### 🐳 Docker (Recommended)
+### 2. Connect to an LLM
 
-**Quick Start:**
+We currently support local LLMs served with `ollama` or **Mistral AI** (support for OpenAI, Claude, and others coming soon).
+
+Edit the `configs/default.toml` file to configure your model:
+
+```toml
+[llm]
+client = "mistral"  # or "ollama"
+model = "mistral-medium-latest"  # or name of the Ollama model
+```
+
+**Supported Providers:**
+- **Mistral AI**: Requires API key in `.env`
+- **Ollama**: Requires local installation and a running service
+
+> 💡 Tip: To install Ollama, visit [ollama.com](https://ollama.com). To get a Mistral API key, sign up at [mistral.ai](https://mistral.ai).
+
+**Environment Setup:**
+
+Create a `.env` file with your Mistral API key:
+
+```env
+MISTRAL_API_KEY=your_api_key_here
+```
+
+For Ollama, make sure the service is running and the specified model is installed.
+
+---
+
+### 3. Start NoPinocchio with Docker
+
+**Requirements:**
+- [Docker](https://docs.docker.com/get-docker/) installed
+
+**Quick Start** (starts both API and chat demo):
+
 ```bash
 docker compose up --build
 ```
 
 **Services:**
-- **API**: http://localhost:8000
+- **API**: http://localhost:8000  
 - **Chat Demo**: http://localhost:7860
 
-**Individual Services:**
+**Start services individually:**
+
 ```bash
-# API only
+# Start API only
 docker compose up api
 
-# Chat demo only
+# Start Chat Demo only
 docker compose up demo
 ```
 
-## Configuration
+---
 
-NoPinocchio supports multiple LLM providers. Configure via `configs/default.toml`:
+### 3.1 Start NoPinocchio Directly with Python
 
-```toml
-[llm]
-client = "mistral"  # or "ollama"
-model = "mistral-medium-latest"
-```
-
-**Supported Providers:**
-- **Mistral AI**: Requires API key in `.env` file
-- **Ollama**: Requires local Ollama installation and running service
-
-*OpenAI and Claude support coming soon.*
-
-**Environment Setup:**
-Create `.env` file with:
-```env
-MISTRAL_API_KEY=your_api_key_here
-```
-
-For Ollama, ensure the service is running:
-```bash
-ollama serve
-```
-
-**Commands:**
-```bash
-# Start both services
-docker compose up -d
-
-# View logs  
-docker compose logs -f
-
-# Stop
-docker compose down
-```
-
-### 🐍 Python
-
-**Requirements:** [uv](https://docs.astral.sh/uv/)
+**Requirements:**
+- [uv](https://docs.astral.sh/uv/) for environment management
 
 ```bash
 uv venv --python 3.12
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-uv pip install -e .
+uv pip install .
 ```
 
-## Quick Start
+**Start API Server:**
 
-**API Server:**
 ```bash
 uvicorn nopin.api:app --reload
 ```
 
-**Chat Interface:**
+**Start Chat Interface:**
+
 ```bash
 python src/nopin/demo/app.py
 ```
 
-**CLI:**
+**Use via CLI:**
+
 ```bash
-nopinochio --question "What is the capital of France?"
+nopinocchio --question "What is the capital of France?"
 ```
 
-**API Usage:**
+---
+
+## API Usage
+
+### Example (Python)
+
 ```python
 import requests
 
@@ -123,27 +137,37 @@ print(f"Answer: {data['answer']}")
 print(f"Confidence: {data['confidence_score']:.2f}")
 ```
 
+### Example (cURL)
+
 ```bash
-# curl example
 curl -X POST "http://localhost:8000/analyze" \
   -H "Content-Type: application/json" \
   -d '{"question": "What is the capital of France?"}'
 ```
 
+### API Response Format
+
+- `answer` (str): The model's response  
+- `confidence_score` (float): Estimated confidence, from 0.0 to 1.0
+
+---
+
 ## Use Cases
 
-**E-commerce Chatbots:** Route low-confidence product questions to human agents instead of providing potentially incorrect information.
+- **E-commerce Chatbots:** Route low-confidence queries to human agents instead of returning uncertain answers.
+- **Educational Apps:** Flag questionable explanations so students know when to verify.
+- **Research Assistance:** Identify insights that need fact-checking before being cited.
+- **Customer Support:** Escalate unclear answers to ensure satisfaction and accuracy.
 
-**Educational Applications:** Flag uncertain AI explanations so students know when to seek additional verification.
+---
 
-**Research Assistance:** Identify when AI-generated insights need fact-checking before inclusion in reports.
-
-**Customer Support:** Escalate queries where the AI lacks confidence to ensure customer satisfaction.
-
+## Algorithm
 ## Evaluation Study
 
-Coming soon - comprehensive evaluation on confidence estimation accuracy.
+_Coming soon: An evaluation of confidence estimation accuracy on LLM benchmarks and._
+
+---
 
 ## References
 
-(https://arxiv.org/abs/2308.16175)
+[1] J. Chen and J. Mueller, “Quantifying Uncertainty in Answers from any Language Model and Enhancing their Trustworthiness,” 2023, arXiv. doi: 10.48550/ARXIV.2308.16175.
