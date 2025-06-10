@@ -75,7 +75,7 @@ For Ollama, make sure the service is running and the specified model is installe
 docker compose up --build
 ```
 
-**Services:**
+**This will start the following services:**
 - **API**: http://localhost:8000  
 - **Chat Demo**: http://localhost:7860
 
@@ -171,12 +171,6 @@ curl -X POST "http://localhost:8000/analyze" \
 - **Educational Apps:** Flag questionable explanations so students know when to verify.
 - **Research Assistance:** Identify insights that need fact-checking before being cited.
 - **Customer Support:** Escalate unclear answers to ensure satisfaction and accuracy.
-
----
-
-## Evaluation Study
-
-_Coming soon
 
 ---
 
