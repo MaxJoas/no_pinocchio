@@ -764,7 +764,7 @@ wheels = [
 ]
 
 [[package]]
-name = "no-pinochio"
+name = "no-pinocchio"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

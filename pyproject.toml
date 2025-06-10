@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "no-pinochio"
+name = "no-pinocchio"
 version = "0.1.0"
 description = "AI Confidence Estimation System - Detect when your AI might be lying"
 requires-python = ">=3.10"
@@ -52,7 +52,7 @@ dev = [
 ]
 
 [project.scripts]
-nopinochio = "nopin.main:main"
+nopinocchio = "nopin.main:main"
 
 [tool.mypy]
 mypy_path = "src"

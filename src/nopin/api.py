@@ -25,8 +25,7 @@ class AnalysisResponse(BaseModel):
     timestamp: str
 
 
-# Initialize NoPinocchio service once at startup
-config_path = os.getenv("NOPIN_CONFIG", "configs/dev.toml")
+config_path = os.getenv("NOPIN_CONFIG", "configs/default.toml")
 config = load_config(config_path)
 np_service = NoPinocchio.from_config(config=config)
 
@@ -43,7 +42,6 @@ async def analyze_confidence(request: AnalysisRequest):
     try:
         result = np_service.analyze_question(question=request.question)
 
-        # Convert confidence score to human-readable level
         confidence_score = result["confidence_score"]
 
         return AnalysisResponse(
