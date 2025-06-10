@@ -91,14 +91,14 @@ docker compose up demo
 
 ---
 
-### 3.1 Start NoPinocchio Directly with Python
+### 3.1 Start NoPinocchio with Python
 
 **Requirements:**
 - [uv](https://docs.astral.sh/uv/) for environment management
 
 ```bash
 uv venv --python 3.12
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 uv pip install .
 ```
 
@@ -117,7 +117,7 @@ python src/nopin/demo/app.py
 **Use via CLI:**
 
 ```bash
-nopinocchio --question "What is the capital of France?"
+nopinocchio --question "What is the capital of South Africa?"
 ```
 
 ---
@@ -130,7 +130,7 @@ nopinocchio --question "What is the capital of France?"
 import requests
 
 response = requests.post("http://localhost:8000/analyze", 
-    json={"question": "What is the capital of France?"})
+    json={"question": "What is the capital of South Africa?"})
 
 data = response.json()
 print(f"Answer: {data['answer']}")
@@ -142,19 +142,23 @@ print(f"Confidence: {data['confidence_score']:.2f}")
 ```bash
 curl -X POST "http://localhost:8000/analyze" \
   -H "Content-Type: application/json" \
-  -d '{"question": "What is the capital of France?"}'
+  -d '{"question": "What is the capital of South Africa?"}'
 ```
 
 ### API Response Format
 
-- `answer` (str): The model's response  
-- `confidence_score` (float): Estimated confidence, from 0.0 to 1.0
-
+```json
+{
+  "question": "What is the capital of France?",
+  "answer": "Paris is the capital of France.",
+  "confidence_score": 0.97,
+  "timestamp": "2025-06-10T18:00:00.000Z"
+}
+```
 ---
 
 ## Use Cases
 
-- **E-commerce Chatbots:** Route low-confidence queries to human agents instead of returning uncertain answers.
 - **Educational Apps:** Flag questionable explanations so students know when to verify.
 - **Research Assistance:** Identify insights that need fact-checking before being cited.
 - **Customer Support:** Escalate unclear answers to ensure satisfaction and accuracy.
@@ -164,7 +168,7 @@ curl -X POST "http://localhost:8000/analyze" \
 ## Algorithm
 ## Evaluation Study
 
-_Coming soon: An evaluation of confidence estimation accuracy on LLM benchmarks and._
+_Coming soon
 
 ---
 
