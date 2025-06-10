@@ -5,7 +5,6 @@ import os
 
 class NoPinocchioChat:
     def __init__(self, api_url: str = None):  # type: ignore
-        # Use environment variable first, then fallback to localhost
         self.api_url = api_url or os.getenv("API_URL", "http://localhost:8000")  # type: ignore
 
     def check_api_connection(self) -> bool:
@@ -24,7 +23,7 @@ class NoPinocchioChat:
                 f"{self.api_url}/analyze",
                 json={"question": question},
                 headers={"Content-Type": "application/json"},
-                timeout=30,
+                timeout=300,
             )
 
             if response.status_code == 200:
@@ -45,13 +44,11 @@ class NoPinocchioChat:
             }
 
 
-# Initialize chat instance
 chat_instance = NoPinocchioChat()
 
-# Create the demo
 with gr.Blocks(title="NoPinocchio Chat") as demo:
-    gr.Markdown("# 🤥 NoPinocchio Chat")
-    gr.Markdown("Ask questions and get answers with confidence scores")
+    gr.Markdown("# NoPinocchio Chat")
+    gr.Markdown("Ask questions and get answers with confidence scores.")
 
     with gr.Row():
         # Main chat area
@@ -64,7 +61,6 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
                 show_copy_button=True,
             )
 
-            # Input and send button in the same row
             with gr.Row():
                 message = gr.Textbox(
                     placeholder="Ask me anything...",
@@ -145,8 +141,6 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
 
     clear_button.click(clear_chat, outputs=chatbot)
 
-    # Sample question handlers
-    # Sample question handlers - FIXED
     sample1.click(
         lambda hist: use_sample("What is the capital of South Africa?", hist),
         inputs=[chatbot],
@@ -158,7 +152,6 @@ with gr.Blocks(title="NoPinocchio Chat") as demo:
         outputs=[chatbot, message],
     )
 
-    # Update API status on load
     demo.load(check_status, outputs=api_status)
 
 if __name__ == "__main__":

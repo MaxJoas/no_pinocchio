@@ -8,12 +8,8 @@
 # - See .env.example for required environment variables
 
 [llm]
-# LLM Provider Configuration
-client = "ollama"  # Options: "mistral", "ollama"
-model = "qwen2.5:0.5b"
-
-# client = "mistral"  # Options: "mistral", "ollama"
-# model = "mistral-small-latest"
+client = "mistral"  # Options: "mistral", "ollama"
+model = "mistral-medium-latest"
 
 
 
@@ -44,7 +40,7 @@ beta = 0.5   # Weight: observed consistency (1.0) vs self-reflection (0.0)
 # =====================================================
 # Actual secrets must be in environment variables!
 mistral_api_key_env = "MISTRAL_API_KEY"  # Environment variable name
-timeout = 30          # Request timeout in seconds
+timeout = 300          # Request timeout in seconds
 max_retries = 3       # Number of retry attempts
 
 [logging]

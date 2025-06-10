@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Union, ClassVar, List
+from typing import Dict, Union, ClassVar, List
 from pathlib import Path
 import tomli  # type: ignore
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -25,7 +25,6 @@ class LLMConfig(BaseModel):
     model: str = Field(default="mistral-medium-latest")
     temperature: Dict[str, TemperatureConfig] = Field(default_factory=dict)
 
-    # Model-client compatibility mapping
     SUPPORTED_COMBINATIONS: ClassVar[Dict[str, Union[List[str], str]]] = {
         "mistral": [
             "mistral-medium-latest",
@@ -101,7 +100,7 @@ class APIConfig(BaseModel):
     """
 
     mistral_api_key_env: str = Field(default="MISTRAL_API_KEY")
-    timeout: int = Field(default=30, ge=1, le=300)
+    timeout: int = Field(default=300, ge=1, le=300)
     max_retries: int = Field(default=3, ge=0, le=10)
 
 
